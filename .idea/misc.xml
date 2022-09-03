@@ -3,8 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Android/7MinutesWorkout/app/src/main/res/drawable/circular_progress_bar.xml" value="0.1" />
+        <entry key="..\:/Android/7MinutesWorkout/app/src/main/res/drawable/circular_progress_gray.xml" value="0.1" />
+        <entry key="..\:/Android/7MinutesWorkout/app/src/main/res/drawable/item_circular_color_accent_background.xml" value="0.1" />
         <entry key="..\:/Android/7MinutesWorkout/app/src/main/res/drawable/item_circular_color_accent_border.xml" value="0.1" />
         <entry key="..\:/Android/7MinutesWorkout/app/src/main/res/drawable/item_color_accent_border_ripple_background.xml" value="0.1" />
+        <entry key="..\:/Android/7MinutesWorkout/app/src/main/res/layout/activity_exercise.xml" value="0.1" />
         <entry key="..\:/Android/7MinutesWorkout/app/src/main/res/layout/activity_main.xml" value="0.5" />
       </map>
     </option>
