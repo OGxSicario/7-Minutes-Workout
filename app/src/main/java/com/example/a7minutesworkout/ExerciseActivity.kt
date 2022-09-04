@@ -1,5 +1,7 @@
 package com.example.a7minutesworkout
 
+import android.media.MediaPlayer
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.CountDownTimer
@@ -7,8 +9,6 @@ import android.speech.tts.TextToSpeech
 import android.util.Log
 import android.view.View
 import android.widget.Toast
-import android.widget.ViewAnimator
-import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.a7minutesworkout.databinding.ActivityExerciseBinding
 import java.util.*
 import kotlin.collections.ArrayList
@@ -25,6 +25,7 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     private var currentExercisePosition = -1
 
     private var mTextToSpeech: TextToSpeech? = null
+    private var mMediaPLayer: MediaPlayer? = null
 
     private var binding: ActivityExerciseBinding? = null
 
@@ -47,10 +48,22 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
             onBackPressed()
         }
 
+        //For sound at rest start or exercise complete
+        val soundURI = Uri.parse(
+            "android.resource://com.example.a7minutesworkout/" + R.raw.press_start)
+        mMediaPLayer = MediaPlayer.create(applicationContext, soundURI)
+        mMediaPLayer?.isLooping = false
+
         setupRestView()
     }
 
     private fun setupRestView(){
+        try{
+            mMediaPLayer?.start()
+        }catch (e: Exception){
+            e.printStackTrace()
+        }
+
         binding?.flRestView?.visibility = View.VISIBLE
         binding?.tvTitle?.visibility = View.VISIBLE
         binding?.tvExerciseName?.visibility = View.INVISIBLE
@@ -176,6 +189,10 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         if(mTextToSpeech != null){
             mTextToSpeech?.stop()
             mTextToSpeech = null
+        }
+
+        if(mMediaPLayer != null){
+            mMediaPLayer?.stop()
         }
         binding = null
     }
