@@ -9,6 +9,7 @@ import android.speech.tts.TextToSpeech
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.a7minutesworkout.databinding.ActivityExerciseBinding
 import java.util.*
 import kotlin.collections.ArrayList
@@ -26,6 +27,8 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
     private var mTextToSpeech: TextToSpeech? = null
     private var mMediaPLayer: MediaPlayer? = null
+
+    private var mExerciseStatusAdapter: ExerciseStatusAdapter? = null
 
     private var binding: ActivityExerciseBinding? = null
 
@@ -55,9 +58,18 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         mMediaPLayer?.isLooping = false
 
         setupRestView()
+        setupExerciseStatusRecyclerView()
     }
 
-    private fun setupRestView(){
+    private fun setupExerciseStatusRecyclerView() {
+        binding?.rvExerciseStatus?.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,false)
+
+        mExerciseStatusAdapter = ExerciseStatusAdapter(exerciseList!!)
+        binding?.rvExerciseStatus?.adapter = mExerciseStatusAdapter
+    }
+
+    private fun setupRestView() {
         try{
             mMediaPLayer?.start()
         }catch (e: Exception){
@@ -83,7 +95,7 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         setRestProgressBar()
     }
 
-    private fun setRestProgressBar(){
+    private fun setRestProgressBar() {
         binding?.progressBar?.progress = restProgress
 
         restTimer = object : CountDownTimer(10000,1000){
@@ -99,13 +111,18 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
                     "Let's start the exercise.",
                     Toast.LENGTH_SHORT
                 ).show()
+
                 currentExercisePosition++
+
+                exerciseList!![currentExercisePosition].setIsSelected(true)
+                mExerciseStatusAdapter!!.notifyDataSetChanged()
+
                 setupExerciseView()
             }
         }.start()
     }
 
-    private fun setupExerciseView(){
+    private fun setupExerciseView() {
         binding?.flRestView?.visibility = View.INVISIBLE
         binding?.tvTitle?.visibility = View.INVISIBLE
         binding?.tvExerciseName?.visibility = View.VISIBLE
@@ -128,7 +145,7 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         setExerciseProgressBar()
     }
 
-    private fun setExerciseProgressBar(){
+    private fun setExerciseProgressBar() {
         binding?.progressBarExercise?.progress = exerciseProgress
 
         exerciseTimer = object : CountDownTimer(30000,1000){
@@ -139,11 +156,10 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
             }
 
             override fun onFinish() {
-                Toast.makeText(
-                    this@ExerciseActivity,
-                    "Let's take rest now.",
-                    Toast.LENGTH_SHORT
-                ).show()
+
+                exerciseList!![currentExercisePosition].setIsCompleted(true)
+                exerciseList!![currentExercisePosition].setIsSelected(false)
+                mExerciseStatusAdapter?.notifyDataSetChanged()
 
                 if(currentExercisePosition < exerciseList?.size!! -1){
                     setupRestView()
@@ -170,7 +186,7 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         }
     }
 
-    private fun speakOut(text: String){
+    private fun speakOut(text: String) {
         mTextToSpeech!!.speak(text,TextToSpeech.QUEUE_FLUSH, null,"")
     }
 
