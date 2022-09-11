@@ -16,9 +16,11 @@
         <entry key="..\:/Android/7MinutesWorkout/app/src/main/res/layout/activity_bmi.xml" value="0.33" />
         <entry key="..\:/Android/7MinutesWorkout/app/src/main/res/layout/activity_exercise.xml" value="0.1" />
         <entry key="..\:/Android/7MinutesWorkout/app/src/main/res/layout/activity_finish.xml" value="0.22" />
+        <entry key="..\:/Android/7MinutesWorkout/app/src/main/res/layout/activity_history.xml" value="0.17223910840932116" />
         <entry key="..\:/Android/7MinutesWorkout/app/src/main/res/layout/activity_main.xml" value="0.1867704280155642" />
         <entry key="..\:/Android/7MinutesWorkout/app/src/main/res/layout/dialog_custom_back_confirmation.xml" value="0.1" />
         <entry key="..\:/Android/7MinutesWorkout/app/src/main/res/layout/item_exercise_status.xml" value="0.17223910840932116" />
+        <entry key="..\:/Android/7MinutesWorkout/app/src/main/res/layout/item_history_row.xml" value="0.14764492753623187" />
       </map>
     </option>
   </component>
